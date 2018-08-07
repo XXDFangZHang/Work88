@@ -80,11 +80,11 @@
                         <span class="label">Inactive</span>
                     </td>
                     <td class="center">
-                        <a class="btn btn-success" href="#">
+                        <a class="btn btn-success" href="add.jsp">
                             <i class="icon-zoom-in icon-white"></i>
                             View
                         </a>
-                        <a class="btn btn-info" href="#">
+                        <a class="btn btn-info" href="add.jsp">
                             <i class="icon-edit icon-white"></i>
                             Edit
                         </a>
