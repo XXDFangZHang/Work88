@@ -11,6 +11,13 @@ public class ResultUtil {
         this.status=1;
         return  this;
     }
+    /**
+     * 成功的方法
+     */
+    public ResultUtil resultSuccess(){
+        this.status=1;
+        return  this;
+    }
     public ResultUtil resultFail(String message){
         this.message=message;
         this.status=0;

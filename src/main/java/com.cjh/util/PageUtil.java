@@ -1,9 +1,9 @@
 package com.cjh.util;
-
+import java.util.List;
 /**
  * 简单的分页工具类
  */
-public class PageUtil {
+public class PageUtil{
     private int pageIndex; //当前页
     private int pageSize=2; //页大小
     private int pageCount; //总页数
