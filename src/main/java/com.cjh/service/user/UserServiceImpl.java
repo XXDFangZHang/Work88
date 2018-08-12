@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteByCondition(Serializable id) {
-        return 0;
+        return userDao.deleteByCondition(id);
     }
 
     @Override
@@ -44,12 +44,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int findRownum() {
-        return 0;
+        return userDao.findRownum();
     }
 
     @Override
     public List<Users> findAllByPage(PageUtil util, Object... params) {
-        return null;
+        return userDao.findAllByPage(util);
     }
     /**
      * 验证用户名是否存在

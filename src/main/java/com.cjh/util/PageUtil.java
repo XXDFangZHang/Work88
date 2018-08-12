@@ -3,8 +3,12 @@ import java.util.List;
 /**
  * 简单的分页工具类
  */
-public class PageUtil{
-    private int pageIndex; //当前页
+public class PageUtil<E>{
+    /**
+     * 分页需要携带的数据集合
+     */
+    private List<E> list;
+    private int pageIndex=1; //当前页
     private int pageSize=2; //页大小
     private int pageCount; //总页数
     private int totalCount; //总记录数
@@ -20,6 +24,15 @@ public class PageUtil{
             this.pageCount=(totalCount%pageSize==0)?(totalCount/pageSize):(totalCount/pageSize+1);
         }
     }
+
+    public List<E> getList() {
+        return list;
+    }
+
+    public void setList(List<E> list) {
+        this.list = list;
+    }
+
 
     public int getPageIndex() {
         return pageIndex;
@@ -66,9 +79,10 @@ public class PageUtil{
     @Override
     public String toString() {
         return "PageUtil{" +
-                "pageIndex=" + pageIndex +
+                "list=" + list +
+                ", pageIndex=" + pageIndex +
                 ", pageSize=" + pageSize +
-                ", pageICount=" + pageCount +
+                ", pageCount=" + pageCount +
                 ", totalCount=" + totalCount +
                 '}';
     }
