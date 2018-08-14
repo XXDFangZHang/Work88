@@ -4,11 +4,16 @@ import com.cjh.bean.Users;
 import com.cjh.service.ServiceFactory;
 import com.cjh.service.user.UserService;
 import com.cjh.util.PageUtil;
-
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -62,4 +67,71 @@ public class HomeServlet extends  BaseServlet {
         }
         return "login";
     }
+
+    /***
+     * 文件上传操作
+     */
+    public  String  upload(HttpServletRequest req, HttpServletResponse resp){
+
+        Users users=new Users();
+
+        //创建DiskFileItemFactory
+        DiskFileItemFactory factory=new DiskFileItemFactory();
+        //创建servletFileUpload
+        ServletFileUpload upload=new ServletFileUpload(factory);
+        //首先判断是否为文件上传请求
+        boolean flag= upload.isMultipartContent(req);
+        if (flag){ //文件上传请求
+            try {
+                List<FileItem> items = upload.parseRequest(req);
+                Iterator<FileItem> iterator = items.iterator();
+                while (iterator.hasNext()){
+                    //获取每一个元素   普通元素  文件元素
+                    FileItem item = iterator.next();
+                    if (item.isFormField()){ //普通元素
+                        String fileName= item.getFieldName();
+                        if (fileName.equals("userName")){
+                            users.setUserName(item.getString("utf-8"));
+                        }
+                    }else {//文件元素
+                        String uploadPath = req.getSession().getServletContext().getRealPath("/upload");
+                        File file=new File(uploadPath);
+                        if (!file.exists()){
+                            file.mkdirs();
+                        }
+                        //获取上传文件
+                        String name = item.getName();
+                        if (name!=null&&!name.equals("")){ //看用户是否选择了文件
+                            File uploadFile=new File(name);
+                            File saveFile=new File(uploadPath,uploadFile.getName());
+                            //真正的上传
+                            item.write(saveFile);
+                            users.setFile(uploadPath+"\\"+uploadFile.getName());
+                        }
+                    }
+                }
+                users.setEmail("aa");
+                users.setUserType(0);
+                users.setPassword("1111");
+                int num= userService.add(users);
+                if (num>0){
+                    System.out.println("文件上传成功！");
+                }else{
+                    System.out.println("文件上传失败");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }else {
+            System.out.println("压根就不是文件上传请求！ enctype!!!");
+        }
+
+        return  "";
+
+    }
+
+
+
+
 }

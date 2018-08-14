@@ -13,8 +13,8 @@ public class UserDaoImpl extends BaseDao implements UserDao{
      */
     @Override
     public int add(Users users) {
-        String sql = "INSERT INTO news_user(userName,`password`,email,userType) VALUES(?,?,?,?)";
-        Object[] params = {users.getUserName(), users.getPassword(), users.getEmail(), users.getUserType()};
+        String sql = "INSERT INTO news_user(userName,`password`,email,userType,file) VALUES(?,?,?,?,?)";
+        Object[] params = {users.getUserName(), users.getPassword(), users.getEmail(), users.getUserType(),users.getFile()};
         return executeUpdate(sql, params);
     }
     /**
